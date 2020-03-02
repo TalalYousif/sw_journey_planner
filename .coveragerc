@@ -5,3 +5,4 @@ omit =
         */test/*
         *__init__.py*
         setup.py
+        sw_journey_planner/command_line.py

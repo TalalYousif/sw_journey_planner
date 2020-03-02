@@ -27,28 +27,22 @@ def load_starships():
 
     # As long as the response contains a url for the next set of results, keep looping
     while url is not None:
-        try:
-            # Fetch this set of star ships from the api
-            response = requests.get(url)
+        # Fetch this set of star ships from the api
+        response = requests.get(url)
 
-            # If request succeeds capture the response data
-            if response.status_code == HTTPStatus.OK:
-                data = response.json()
-            else:
-                # Otherwise raise an exception
-                raise Exception(f"Unable to load star ships from Swapi. HTTP Error: {response.status_code}")
+        # If request succeeds capture the response data
+        if response.status_code == HTTPStatus.OK:
+            data = response.json()
+        else:
+            # Otherwise raise an exception
+            raise Exception(f"Unable to load star ships from Swapi. HTTP Error: {response.status_code}")
 
-            # Update the url with the url of next page
-            url = data["next"]
+        # Update the url with the url of next page
+        url = data["next"]
 
-            # Loop through star ship objects from the response, create a StarShip instance and yield it to the generator
-            for star_ship_object in data["results"]:
-                yield _create_star_ship(star_ship_object)
-
-        # On exception, print it and break from the loop
-        except Exception as e:
-            print(str(e))
-            break
+        # Loop through star ship objects from the response, create a StarShip instance and yield it to the generator
+        for star_ship_object in data["results"]:
+            yield _create_star_ship(star_ship_object)
 
 
 def _create_star_ship(star_ship_object):
