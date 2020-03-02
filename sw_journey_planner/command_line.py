@@ -5,6 +5,8 @@ Program entry point
 """
 
 import sys
+# Swapi api is imported as loader to serve as an exchangeable interface.
+# Any class or module can replace Swapi, as long as it implements a load_starships function
 import sw_journey_planner.swapi as loader
 
 # Constant for unknown number of  stops
@@ -23,14 +25,14 @@ def main():
     # ensure distance is an integer
     distance = int(distance)
 
-    # Loop through the starships and plan their journeys
-    for starship in loader.load_starships():
-        # Ask the starship to plan the journey
-        stops = starship.plan_journey(distance)
+    # Loop through the star ships and plan their journeys
+    for star_ship in loader.load_starships():
+        # Ask the star ship to plan the journey
+        stops = star_ship.plan_journey(distance)
 
-        # Print the name of starship and the number of stops required to make the Journey.
-        # Print Unknow if the number of stops could not be determined
-        print(f"{starship.name}: {_unknown_string if stops is None else stops}")
+        # Print the name of star ship and the number of stops required to make the journey.
+        # Print Unknown if the number of stops could not be determined
+        print(f"{star_ship.name}: {_unknown_string if stops is None else stops}")
 
 
 if __name__ == "__main__":

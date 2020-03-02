@@ -1,5 +1,5 @@
 import unittest
-from sw_journey_planner.swapi import _create_starship
+from sw_journey_planner.swapi import _create_star_ship
 
 
 class TestSwapiCreate(unittest.TestCase):
@@ -28,7 +28,7 @@ class TestSwapiCreate(unittest.TestCase):
             "url": "https://swapi.co/api/starships/15/"
         })
 
-        starship = _create_starship(starship_json)
+        starship = _create_star_ship(starship_json)
 
         with self.subTest("mglt equals 40"):
             self.assertEqual(40, starship._mglt)

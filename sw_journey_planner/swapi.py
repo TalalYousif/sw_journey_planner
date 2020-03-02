@@ -1,9 +1,9 @@
 """
-Load starwars spaceships from Swapi API
+Load Star Wars star ships from Swapi API
 """
 import requests
 from http import HTTPStatus
-import sw_journey_planner.starship as starship
+import sw_journey_planner.starship as star_ship
 
 # Dictionary used for time interval conversions
 _interval_map = dict(year=365 * 24, month=30 * 24, week=7 * 24, day=24, hour=1)
@@ -16,10 +16,10 @@ _success_code = 200
 
 
 def load_starships():
-    """The public API to load Starships from Swapi API
+    """The public API to load star ships from Swapi API
 
     Returns:
-        Generator object containing instances of Starship
+        Generator object containing instances of Star ship
     """
 
     # Swapi pages the results and points to the urls of the next set of results in the response. This is the initial url
@@ -28,7 +28,7 @@ def load_starships():
     # As long as the response contains a url for the next set of results, keep looping
     while url is not None:
         try:
-            # Fetch this set of starships from the api
+            # Fetch this set of star ships from the api
             response = requests.get(url)
 
             # If request succeeds capture the response data
@@ -36,31 +36,32 @@ def load_starships():
                 data = response.json()
             else:
                 # Otherwise raise an exception
-                raise Exception(f"Unable to load starships from Swapi. HTTP Error: {response.status_code}")
+                raise Exception(f"Unable to load star ships from Swapi. HTTP Error: {response.status_code}")
 
             # Update the url with the url of next page
             url = data["next"]
 
-            # Loop through starship objects from the response and create a Starship instance and yield it to the generator
-            for starship_object in data["results"]:
-                yield _create_starship(starship_object)
+            # Loop through star ship objects from the response, create a StarShip instance and yield it to the generator
+            for star_ship_object in data["results"]:
+                yield _create_star_ship(star_ship_object)
 
-        except Exception as e:#do better than print it
+        # On exception, print it and break from the loop
+        except Exception as e:
             print(str(e))
             break
 
 
-def _create_starship(starship_object):
-    """Creates an instance of Starship from a json object
+def _create_star_ship(star_ship_object):
+    """Creates an instance of Star ship from a json object
 
     Args:
-        starship_object: a json object containing starship attributes
+        star_ship_object: a json object containing starship attributes
 
     Returns:
-        a Starship instance
+        a StarShip instance
     """
     # Parse the consumables from SWAPI's representation
-    parsed_consumables = _parse_consumables(starship_object["consumables"])
+    parsed_consumables = _parse_consumables(star_ship_object["consumables"])
 
     # If consumables could not be parsed set consumables in hours to None
     if parsed_consumables is None:
@@ -72,11 +73,11 @@ def _create_starship(starship_object):
         # Convert the increment and interval to hours
         consumables_in_hours = _convert_consumables_to_hours(increment, interval)
 
-    # Set Megalights to None if it's unknown, otherwise convert it to int
-    mglt = None if starship_object["MGLT"] == _unknown_string else int(starship_object["MGLT"])
+    # Set Mega lights to None if it's unknown, otherwise convert it to int
+    mglt = None if star_ship_object["MGLT"] == _unknown_string else int(star_ship_object["MGLT"])
 
-    # Create an instance of Starship and return it
-    return starship.Starship(mglt, starship_object["name"], consumables_in_hours)
+    # Create an instance of StarShip and return it
+    return star_ship.StarShip(mglt, star_ship_object["name"], consumables_in_hours)
 
 
 def _parse_consumables(consumables):

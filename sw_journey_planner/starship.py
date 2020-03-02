@@ -1,11 +1,11 @@
-class Starship:
-    """Star wars starship that can plan journeys between planets """
+class StarShip:
+    """Star wars star ship that can plan journeys between planets """
 
     def __init__(self, mglt, name, consumables):
-        """Initialize a Starship instance.
+        """Initialize a Star ship instance.
 
         Args:
-            mglt: Max speed of the spaceship in Megalights per hour
+            mglt: Max speed of the spaceship in Mega lights per hour
             name: Name of the spaceship
             consumables: Number of hour the spaceship can travel without needing resupply
         """
@@ -16,19 +16,18 @@ class Starship:
 
     @property
     def name(self):
-        """ Starship name property
+        """ Star ship name property
 
         Returns:
-            Name of the starship
+            Name of the star ship
         """
         return self._name
 
-    # return something other than none to denote unable to calc?
     def plan_journey(self, distance):
         """ Plan a journey with a given distance.
 
         Args:
-            distance: Journey distance in Megalights.
+            distance: Journey distance in Mega lights.
 
         Returns:
             The number of stops required to make the journey.
@@ -54,7 +53,7 @@ class Starship:
         """ Calculate the duration of a journey
 
         Args:
-            distance: The distance of the journey in megalights
+            distance: The distance of the journey in mega lights
 
         Returns:
             Duration of the journey in hours
@@ -65,5 +64,4 @@ class Starship:
             return None
 
         # Assuming the ship always travels at max speed. Duration is distance divided by speed
-        # in hours
         return distance / self._mglt
