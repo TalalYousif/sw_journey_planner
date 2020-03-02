@@ -1,0 +1,12 @@
+*.pyc
+.idea/
+build/
+dist/
+htmlcov/
+.coverage
+.vscode/
+__pycache__/
+sw_journey_planner.egg-info/
+sw_journey_planner/__pycache__/
+sw_journey_planner/sw_journey_planner.egg-info/
+test/__pycache__/
